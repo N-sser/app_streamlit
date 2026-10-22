@@ -5,12 +5,14 @@ from sklearn.metrics import silhouette_score, davies_bouldin_score
 
 def preprocessing(df, features: list):
     X = df[features].copy()
-    numerical = df.select_dtypes(include=['int64']).columns
-    categorical = df.select_dtypes(include=['object']).columns
+    numerical = X.select_dtypes(include=['int64']).columns
+    categorical = X.select_dtypes(include=['object']).columns
 
+    # Scaling numerical variables
     ss = StandardScaler()
     X[numerical] = ss.fit_transform(X[numerical])
 
+    # Encoding categorical variables
     le = LabelEncoder()
     X[categorical] = X[categorical].apply(le.fit_transform)
     return X

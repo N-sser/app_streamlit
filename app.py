@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from model import *
+from model import preprocessing, clustering, metrics
 
 st.title("Introduction Agglomerative Clustering")
 
@@ -14,16 +14,16 @@ if file is None:
     st.stop()
 
 df = pd.read_csv(file)
-st.dataframe(df, use_container_width=True)
+st.dataframe(df, width='content')
 
 st.subheader("Preprocessing")
 features = st.multiselect("Choose features set", df.columns.tolist())
 
-if not features:
+if features == []:
     st.stop()
 
 X = preprocessing(df, features)
-st.dataframe(X, use_container_width=True)
+st.dataframe(X, width='content')
 
 st.subheader("Modeling")
 k = st.slider("Value of K (n of clusters)", 2, 10)

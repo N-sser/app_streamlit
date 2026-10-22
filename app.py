@@ -34,3 +34,20 @@ sil, dav = metrics(X, labels)
 
 st.metric("Silhouette Score", f"{sil:.3f}")
 st.metric("Davies-Bouldin Index", f"{dav:.3f}")
+
+st.subheader("Plotting of two variables")
+
+plot_features = st.multiselect("Choose features to plot (2 max.)", X.columns.tolist())
+
+if len(plot_features) < 2:
+    st.info("Choose two features to begin plot")
+elif len(plot_features) == 2:
+    fig, ax = plt.subplots()
+    ax.scatter(X[plot_features[0]], X[plot_features[1]], c=labels)
+    ax.set_xlabel(plot_features[0])
+    ax.set_ylabel(plot_features[1])
+    st.pyplot(fig)
+elif len(plot_features) > 2:
+    st.error("More than two features. Imposible to plot")
+else:
+    st.error("An error happened")
